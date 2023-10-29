@@ -39,7 +39,7 @@ const camera = () => {
     navigator.mediaDevices
       .getUserMedia({
         video: {
-          aspectRatio: 7/5,
+          aspectRatio: 7/10,
         },
       })
       .then((mediaStream) => {
