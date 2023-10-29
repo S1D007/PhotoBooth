@@ -40,7 +40,7 @@ const camera = () => {
       .getUserMedia({
         video: {
             width: 600,
-            height: 400,
+            height: 300,
         },
       })
       .then((mediaStream) => {
