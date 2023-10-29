@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 
 const camera = () => {
   const { frame } = useDataStore();
-  const router = useRouter()
+  const router = useRouter();
   const [image, setImage] = React.useState<string>("");
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const videoWidth = 300;
@@ -37,9 +37,11 @@ const camera = () => {
   useEffect(() => {
     let stream: MediaStream | null = null;
     navigator.mediaDevices
-      .getUserMedia({ video: {
-        aspectRatio: 0.75,
-      } })
+      .getUserMedia({
+        video: {
+          aspectRatio: 0.75,
+        },
+      })
       .then((mediaStream) => {
         stream = mediaStream;
         if (videoRef.current) {
@@ -61,7 +63,32 @@ const camera = () => {
   return (
     <Wrapper>
       <Logo />
-      <div>
+      <div className="min-h-[600px] min-w-[400px] bg-white">
+        {!image ? (
+          <video
+            className="rounded-2xl min-h-[600px]"
+            ref={videoRef}
+            autoPlay
+          ></video>
+        ) : (
+          <Image
+            className="min-h-[600px] object-cover rounded-2xl"
+            src={image}
+            width={400}
+            height={600}
+          />
+        )}
+      </div>
+      <div
+        className="
+        w-24 h-24 rounded-full bg-blue-600 flex justify-center items-center
+        hover:bg-blue-700 transition-all duration-300 ease-in-out
+        "
+        onClick={handleScreenshot}
+      >
+        <CameraIcon size={50} />
+      </div>
+      {/* <div>
         <Image
           className="z-10 absolute top-0"
           src={frame?.src}
@@ -140,7 +167,7 @@ const camera = () => {
         >
           <CameraIcon size={50} />
         </div>
-      )}
+      )} */}
     </Wrapper>
   );
 };
