@@ -17,8 +17,8 @@ const camera = () => {
   const router = useRouter();
   const [image, setImage] = React.useState<string>("");
   const videoRef = React.useRef<HTMLVideoElement>(null);
-//   const videoWidth = 300;
-//   const videoHeight = 400; // Adjust according to your requirement
+  //   const videoWidth = 300;
+  //   const videoHeight = 400; // Adjust according to your requirement
 
   const handleScreenshot = () => {
     if (videoRef.current) {
@@ -39,7 +39,7 @@ const camera = () => {
     navigator.mediaDevices
       .getUserMedia({
         video: {
-          aspectRatio: 16/9,
+          aspectRatio: 16 / 9,
         },
       })
       .then((mediaStream) => {
@@ -63,19 +63,21 @@ const camera = () => {
   return (
     <Wrapper>
       <Logo />
-      <div className="min-h-[600px] min-w-[400px] bg-white">
+      <div>
+        <Image
+          className="z-10 absolute top-0"
+          src={frame?.src}
+          width={videoRef.current?.videoWidth}
+          height={videoRef.current?.videoHeight}
+        />
         {!image ? (
-          <video
-            className="rounded-2xl min-h-[600px]"
-            ref={videoRef}
-            autoPlay
-          ></video>
+          <video className="-z-10 rounded-2xl" ref={videoRef} autoPlay></video>
         ) : (
           <Image
-            className="min-h-[600px] object-cover rounded-2xl"
+            className="object-cover rounded-2xl"
             src={image}
-            width={400}
-            height={600}
+            width={videoRef.current?.videoWidth}
+            height={videoRef.current?.videoHeight}
           />
         )}
       </div>
