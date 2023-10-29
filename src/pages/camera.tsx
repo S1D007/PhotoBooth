@@ -40,7 +40,7 @@ const camera = () => {
       .getUserMedia({
         video: {
             width: 600,
-            height: 500,
+            height: 400,
         },
       })
       .then((mediaStream) => {
@@ -69,7 +69,7 @@ const camera = () => {
           className="z-10 absolute top-0 left-0"
           src={frame?.src}
           width={400}
-          height={600}
+          height={550}
         />
         {!image ? (
           <video className=" rounded-2xl" ref={videoRef} autoPlay></video>
