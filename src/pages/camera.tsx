@@ -17,14 +17,14 @@ const camera = () => {
   const router = useRouter();
   const [image, setImage] = React.useState<string>("");
   const videoRef = React.useRef<HTMLVideoElement>(null);
-  const videoWidth = 300;
-  const videoHeight = 400; // Adjust according to your requirement
+  //   const videoWidth = 300;
+  //   const videoHeight = 400; // Adjust according to your requirement
 
   const handleScreenshot = () => {
     if (videoRef.current) {
       const canvas = document.createElement("canvas");
-      canvas.width = videoWidth;
-      canvas.height = videoHeight;
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
       const context = canvas.getContext("2d");
       if (context) {
         context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
@@ -39,7 +39,8 @@ const camera = () => {
     navigator.mediaDevices
       .getUserMedia({
         video: {
-          aspectRatio: 0.75,
+          width: { min: 270, max: 270 },
+          height: { min: 480, max: 480 },
         },
       })
       .then((mediaStream) => {
@@ -58,7 +59,7 @@ const camera = () => {
         });
       }
     };
-  }, [videoHeight, videoWidth, image]);
+  }, [image]);
 
   return (
     <Wrapper>
