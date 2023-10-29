@@ -10,9 +10,11 @@ import {
   RetryIcon,
   WhatsappIcon,
 } from "@/components/Icons";
+import { useRouter } from "next/router";
 
 const camera = () => {
   const { frame } = useDataStore();
+  const router = useRouter()
   const [image, setImage] = React.useState<string>("");
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const videoWidth = 300;
@@ -35,7 +37,9 @@ const camera = () => {
   useEffect(() => {
     let stream: MediaStream | null = null;
     navigator.mediaDevices
-      .getUserMedia({ video: { width: videoWidth, height: videoHeight } })
+      .getUserMedia({ video: {
+        aspectRatio: 0.75,
+      } })
       .then((mediaStream) => {
         stream = mediaStream;
         if (videoRef.current) {
@@ -95,6 +99,7 @@ const camera = () => {
               "
               onClick={() => {
                 setImage("");
+                router.push("/")
               }}
             >
               <RetryIcon size={50} />
