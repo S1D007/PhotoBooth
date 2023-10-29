@@ -65,13 +65,13 @@ const camera = () => {
       <Logo />
       <div>
         <Image
-          className="z-10 absolute top-0"
+          className="z-10 absolute top-0 left-0"
           src={frame?.src}
-          width={videoRef.current?.videoWidth}
-          height={videoRef.current?.videoHeight}
+          width={400}
+          height={600}
         />
         {!image ? (
-          <video className="-z-10 rounded-2xl" ref={videoRef} autoPlay></video>
+          <video className=" rounded-2xl" ref={videoRef} autoPlay></video>
         ) : (
           <Image
             className="object-cover rounded-2xl"
