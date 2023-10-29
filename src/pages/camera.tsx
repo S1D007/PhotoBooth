@@ -39,8 +39,8 @@ const camera = () => {
     navigator.mediaDevices
       .getUserMedia({
         video: {
-            width: 400,
-            height: 600,
+            width: 600,
+            height: 400,
         },
       })
       .then((mediaStream) => {
