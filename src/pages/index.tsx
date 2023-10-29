@@ -18,6 +18,11 @@ const Index = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 1 } },
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      router.replace("/home");
+    }, 2000);
+  })
 
   return (
     <motion.div
