@@ -3,7 +3,7 @@ import { NextUIProvider } from "@nextui-org/react";
 
 export default function Document() {
   return (
-    <Html lang="en" className="dark">
+    <Html lang="en" className="">
       <Head />
       <body>
         <NextUIProvider>
