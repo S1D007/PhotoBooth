@@ -10,7 +10,7 @@ import frame3 from "../assets/frame3.png";
 const index = () => {
   return (
     <Wrapper>
-      <Logo />
+      {/* <Logo /> */}
       <FramePreview />
       <Frames frames={[frame1, frame2, frame3]} />
     </Wrapper>

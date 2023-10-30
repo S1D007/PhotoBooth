@@ -76,13 +76,13 @@ const camera = () => {
 
   return (
     <Wrapper>
-      <Logo />
+      {/* <Logo /> */}
       <div>
         {qr && (
           <img
             src={qr}
             className="
-            w-24 h-24 rounded-full bg-red-600 flex justify-center items-center
+            w-80 h-80 rounded-2xl self-center
             "
           />
         )}
@@ -92,26 +92,29 @@ const camera = () => {
           width={400}
           height={700}
         />
-        {!image ? (
-          <video className="rounded-2xl" ref={videoRef} autoPlay></video>
-        ) : (
-          <Image
-            className="-z-10 object-cover rounded-2xl"
-            src={image}
-            width={videoRef.current?.videoWidth}
-            height={videoRef.current?.videoHeight}
-          />
-        )}
+        {!qr &&
+          (!image ? (
+            <video className="rounded-2xl" ref={videoRef} autoPlay></video>
+          ) : (
+            <Image
+              className="-z-10 object-cover rounded-2xl"
+              src={image}
+              width={videoRef.current?.videoWidth}
+              height={videoRef.current?.videoHeight}
+            />
+          ))}
       </div>
-      <div
-        className="
+      {!image && !qr && (
+        <div
+          className="
         w-24 h-24 rounded-full bg-blue-600 flex justify-center items-center
         hover:bg-blue-700 transition-all duration-300 ease-in-out
         "
-        onClick={handleScreenshot}
-      >
-        <CameraIcon size={50} />
-      </div>
+          onClick={handleScreenshot}
+        >
+          <CameraIcon size={50} />
+        </div>
+      )}
       {image && (
         <div className="flex justify-evenly items-center flex-col space-y-4 pt-10">
           <h1 className="text-white text-center text-lg font-bold">
@@ -175,6 +178,7 @@ const camera = () => {
             "
               onClick={async () => {
                 setImage("");
+                // remove white space from prompt
                 const prompt = window.prompt("Enter the email id to share");
                 const formData = new FormData();
                 const relImage = dataURItoBlob(image);
@@ -187,7 +191,10 @@ const camera = () => {
                 formData.append("overlay", imageFile);
                 console.log(formData);
                 axios
-                  .post(`${api}/api/sendEmail?email=${prompt}`, formData)
+                  .post(
+                    `${api}/api/sendEmail?email=${prompt?.split(" ")[0]}`,
+                    formData
+                  )
                   .then((res) => {
                     alert("Image sent successfully");
                   })
