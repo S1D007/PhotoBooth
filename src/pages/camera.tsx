@@ -236,6 +236,10 @@ const camera = () => {
             >
               <h1 className="text-white text-center text-lg font-bold">QR</h1>
             </div>
+            {
+              downloading && <div className="animate-spin rounded-full h-24 w-24 border-t-2 border-b-2 border-gray-900">
+              </div>
+            }
             <div onClick={async ()=>{
               setDownloading(true);
               const formData = new FormData();
@@ -250,19 +254,23 @@ const camera = () => {
               formData.append("overlay", imageFile);
               axios
                 .post(`${api}/api/qr`, formData)
-                .then((res) => {
+                .then(async(res) => {
                   // download image
-                  const link = document.createElement('a');
-                  link.href = res.data.qr.split("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=")[1];
-                  link.download = 'image.png';
-                  document.body.appendChild(link);
+                  const imge = res.data.qr.split("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=")[1];
+                  const response = await axios.get(imge, {
+                    responseType: "blob",
+                  }); 
+                  const blob = new Blob([response.data], { type: "image/jpeg" });
+                  const url = URL.createObjectURL(blob);
+                  const link = document.createElement("a");
+                  link.href = url;
+                  link.download = "Pixie.jpeg";
                   link.click();
-                  document.body.removeChild(link);
-                  setDownloading(false);
+                  URL.revokeObjectURL(url);
                   setImage("");
                 })
                 .catch((err) => {});
-            }} className="bg-black text-white rounded-full p-x-2 py-1 font-bold text-2xl cursor-pointer">Download</div>
+            }} className="bg-black text-white rounded-full px-2 py-1 font-bold text-2xl cursor-pointer">Download</div>
           </div>
         </div>
       )}
