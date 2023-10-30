@@ -194,7 +194,7 @@ const camera = () => {
                 console.log(formData);
                 axios
                   .post(
-                    `${api}/api/sendEmail?email=${prompt?.split(" ")[0]}`,
+                    `${api}/api/sendEmail?email=${prompt?.replace(" ","")}`,
                     formData
                   )
                   .then((res) => {
