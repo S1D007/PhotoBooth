@@ -191,7 +191,7 @@ const camera = () => {
                   type: "image/png",
                 });
                 formData.append("overlay", imageFile);
-                console.log(prmopt?.trim());
+                console.log(prompt?.trim());
                 axios
                   .post(
                     `${api}/api/sendEmail?email=${prompt}`,
@@ -235,6 +235,29 @@ const camera = () => {
             >
               <h1 className="text-white text-center text-lg font-bold">QR</h1>
             </div>
+            <div onClick={async ()=>{
+              const formData = new FormData();
+              formData.append("base", image);
+              const relImage = dataURItoBlob(image);
+              formData.append("base", relImage);
+              const response = await fetch(frame?.src as any);
+              const imageBuffer = await response.arrayBuffer();
+              const imageFile = new File([imageBuffer], "image.png", {
+                type: "image/png",
+              });
+              formData.append("overlay", imageFile);
+              axios
+                .post(`${api}/api/qr`, formData)
+                .then((res) => {
+                  // download image
+                  const link = document.createElement('a');
+                  link.href = res.data.qr;
+                  link.download = 'image.png';
+                  document.body.appendChild(link);
+                  link.click();
+                })
+                .catch((err) => {});
+            }} className="bg-black rounded-full p-x-2 py-1 font-bold text-2xl cursor-pointer">Download</div>
           </div>
         </div>
       )}
