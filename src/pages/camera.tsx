@@ -47,6 +47,7 @@ const camera = () => {
     }
   };
   const [qr, setQr] = React.useState<string>("");
+  const [downloading, setDownloading] = React.useState<boolean>(false);
   useEffect(() => {
     let stream: MediaStream | null = null;
     navigator.mediaDevices
@@ -236,6 +237,7 @@ const camera = () => {
               <h1 className="text-white text-center text-lg font-bold">QR</h1>
             </div>
             <div onClick={async ()=>{
+              setDownloading(true);
               const formData = new FormData();
               formData.append("base", image);
               const relImage = dataURItoBlob(image);
@@ -251,13 +253,16 @@ const camera = () => {
                 .then((res) => {
                   // download image
                   const link = document.createElement('a');
-                  link.href = res.data.qr;
+                  link.href = res.data.qr.split("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=")[1];
                   link.download = 'image.png';
                   document.body.appendChild(link);
                   link.click();
+                  document.body.removeChild(link);
+                  setDownloading(false);
+                  setImage("");
                 })
                 .catch((err) => {});
-            }} className="bg-black rounded-full p-x-2 py-1 font-bold text-2xl cursor-pointer">Download</div>
+            }} className="bg-black text-white rounded-full p-x-2 py-1 font-bold text-2xl cursor-pointer">Download</div>
           </div>
         </div>
       )}
