@@ -86,12 +86,14 @@ const camera = () => {
             "
           />
         )}
-        <Image
+        {
+          !qr && <Image
           className="z-10 absolute top-0 left-0"
           src={frame?.src}
           width={400}
           height={700}
         />
+        }
         {!qr &&
           (!image ? (
             <video className="rounded-2xl" ref={videoRef} autoPlay></video>
