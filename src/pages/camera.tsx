@@ -191,10 +191,10 @@ const camera = () => {
                   type: "image/png",
                 });
                 formData.append("overlay", imageFile);
-                console.log(formData);
+                console.log(prmopt?.trim());
                 axios
                   .post(
-                    `${api}/api/sendEmail?email=${prompt?.trim()}`,
+                    `${api}/api/sendEmail?email=${prompt}`,
                     formData
                   )
                   .then((res) => {
