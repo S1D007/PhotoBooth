@@ -11,7 +11,7 @@ import {
   RetryIcon,
   WhatsappIcon,
 } from "@/components/Icons";
-const api = "https://15.206.74.208.nip.io";
+const api = "https://13.234.20.126.nip.io/";
 import { useRouter } from "next/router";
 
 export const dataURItoBlob = (dataURI: string): Blob => {
